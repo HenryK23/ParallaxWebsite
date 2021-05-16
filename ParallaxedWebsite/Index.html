@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Parallaxed website</title>
+    <link rel="stylesheet" href="css/main.css">
+  </head>
+  <body>
+
+    <section>
+            <span  class="scroll" data-rate="-0.3" data-direction="vertical" id="shop" style="bottom:0; left:0; position: absolute;"> <img src="images/FarCity.png" alt="shop"></span>
+            <span  class="scroll" data-rate="-0.5" data-direction="vertical" id="shop" style="bottom:0; left:0; position: absolute;"> <img src="images/StreetBuildings.png" alt="shop"></span>
+            <span  class="scroll" data-rate="-0.7" data-direction="vertical" id="shop" style="bottom:0; left:0; position: absolute;"> <img src="images/Road.png" alt="shop"></span>
+            <span  class="scroll" data-rate="-1" data-direction="vertical" id="shop" style="bottom:0; left:0; position: absolute;"> <img src="images/Trees.png" alt="shop"></span>
+            <span  class="scroll" data-rate="-1" data-direction="vertical" id="shop" style="bottom:0; left:0; position: absolute;"> <img src="images/IceVans.png" alt="shop"></span>
+            <ul>
+                <li class="scroll" data-rate="-1" data-direction="vertical" style="visibility:hidden; bottom: 100; left:100;font-family: Arial, sans-serif;color: white; position: relative;" id="sweet">Too Sweet!</li>
+                <li class="scroll" data-rate="-1" data-direction="vertical" style="visibility:hidden; bottom: 100; left:500;font-family: Arial, sans-serif;color: white; position: relative;" id="salty">Too Salty!</li>
+                <li class="scroll" data-rate="1.05" data-direction="vertical" style="visibility:hidden; bottom: 100; left:1000; font-family: Arial, sans-serif; color: white;position: relative;" id="right">Just Right!</li>
+            </ul>
+            <span class="goldi" id="goldilocks" style="transform:translateX(0px); bottom:0; left:0; position: absolute;"> <img src="images/goldilocks.png" alt="goldi"></span>
+        </section>
+
+
+
+    <section style="display: none;" id ="hiddenSection">
+      <div>
+        <a> <h2 style ="bottom:-10%; left:2%; font-size:14px; font-family: Arial, sans-serif;color: white; position:absolute;"> Twitter </h2> </a>
+        <h2 style ="bottom:-10%; left:7%; font-size:14px; font-family: Arial, sans-serif;color: white; position:absolute;"> Facebook </h2>
+        <h2 style ="bottom:-10%; left:95%; font-size:14px; font-family: Arial, sans-serif;color: white; position:absolute;"> About Us </h2>
+        <h2 style ="bottom:-10%; left:90%; font-size:14px; font-family: Arial, sans-serif;color: white; position:absolute;"> Contact Us </h2>
+      </div>
+        <div>
+          <h1 style="font-size:1em; text-align:center; bottom:-37%;left:35%; font-family: Arial, sans-serif;color: white;position:absolute;"> Mama's Ice Cream </h1>
+        </div>
+        <div>
+          <span id="shop" style="bottom:-60%; left:1%; position: absolute;"> <img src="images/MamaVan.png" alt="goldi"></span>
+          <span style="bottom:-75%; left:42%; position: absolute;font-size:14px; "> <a class="push_button blue" href="#">Find your nearest van!</a></span>
+        </div>
+
+    </section>
+
+    <section style="display:none;">
+    </section>
+
+    <script>
+      var oldVal = 0;
+      var variation = 0;
+      document.addEventListener("wheel", function (f) {
+
+        oldVal = parseInt(document.getElementById("goldilocks").style.transform.replace("translateX(","").replace("px)",""));
+        variation = parseInt(f.deltaY);
+
+        if(oldVal - variation < 1900 && oldVal - variation > -100){
+          document.getElementById("goldilocks").style.transform = "translateX(" + (oldVal - variation) + "px)";
+        }
+
+        if(oldVal - variation >= 300){
+          document.getElementById("sweet").style.visibility = "visible";
+        }
+        if(oldVal - variation >= 1000){
+          document.getElementById("salty").style.visibility = "visible";
+        }
+        if(oldVal - variation >= 1700){
+          document.getElementById("right").style.visibility = "visible";
+        }
+
+        if(oldVal - variation >= 1800){
+          document.getElementById("hiddenSection").style.display = "grid";
+          document.getElementById("goldilocks").style.visibility = "hidden";
+
+
+
+
+          console.log("working");
+        }
+
+        return false;
+    }, true);
+
+
+
+      window.addEventListener('scroll', function(e) {
+
+             const target = document.querySelectorAll('.scroll');
+
+             var index = 0, length = target.length;
+             for (index; index < length; index++) {
+                 var pos = window.pageYOffset * target[index].dataset.rate;
+
+                 if(target[index].dataset.direction === 'vertical') {
+                     target[index].style.transform = 'translate3d(0px,'+pos+'px, 0px)';
+                 } else {
+                     var posX = window.pageYOffset * target[index].dataset.ratex;
+                     var posY = window.pageYOffset * target[index].dataset.ratey;
+
+                     target[index].style.transform = 'translate3d('+posX+'px, '+posY+'px, 0px)';
+                 }
+             }
+      });
+
+      var $button = document.querySelector('.button');
+$button.addEventListener('click', function() {
+  var duration = 0.3,
+      delay = 0.08;
+  TweenMax.to($button, duration, {scaleY: 1.6, ease: Expo.easeOut});
+  TweenMax.to($button, duration, {scaleX: 1.2, scaleY: 1, ease: Back.easeOut, easeParams: [3], delay: delay});
+  TweenMax.to($button, duration * 1.25, {scaleX: 1, scaleY: 1, ease: Back.easeOut, easeParams: [6], delay: delay * 3 });
+});
+
+    </script>
+
+
+
+  </body>
+</html>
